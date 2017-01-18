@@ -115,17 +115,17 @@
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
             <li><a href="index.php">HOME</a></li>
-            <li><a href="about.php">ABOUT</a></li>
-            <li><a href="services.php">SERVICES</a></li>
-            <li><a href="events&clients.php">EVENTS & CLIENTS</a></li>
+            <li><a href="edit.php">EDIT</a></li>
+            <!-- <li><a href="services.php">SERVICES</a></li> -->
+            <!-- <li><a href="events&clients.php">EVENTS & CLIENTS</a></li>
             <li><a href="becomepartner.php">BECOME A PARTNER</a></li>
-            <li><a href="contact.php">CONTACT US</a></li>
+            <li><a href="contact.php">CONTACT US</a></li> -->
           </ul>
         </div>
       </div>
     </nav>
 
-    
+
 
 
 

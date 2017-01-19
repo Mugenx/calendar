@@ -7,6 +7,7 @@
 </div><!-- /.container -->
 
     <!-- customize js -->
+
     <script type="text/javascript" src="js/ani.js"></script>
     <!-- Bootstrap core JavaScript
     ================================================== -->
@@ -18,6 +19,10 @@
     <script src="assets/js/vendor/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="assets/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="lib/moment.min.js"></script>
+    <script src="lib/jquery.min.js"></script>
+    <script src='js/fullcalendar.min.js'></script>
+    <script src='js/calendarController.js'></script>
 </body>
 </html>
 </html>

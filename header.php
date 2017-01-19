@@ -19,7 +19,7 @@
   <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
   <link href="assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
-  <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+  <!-- Just for debugging purposes. Don"t actually copy these 2 lines! -->
   <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
   <script src="assets/js/ie-emulation-modes-warning.js"></script>
 
@@ -33,6 +33,10 @@
       
       <!-- Custom styles for this template -->
       <link href="css/style.css" rel="stylesheet">
+      
+      <link href="css/fullcalendar.min.css" rel="stylesheet" />
+      <link href="css/fullcalendar.print.min.css" rel="stylesheet" media="print" />
+     
 
       <style type="text/css">
         .navbar-nav > li > a {
@@ -49,6 +53,7 @@
         .navbar .navbar-collapse {
           text-align: center;
         }
+
         #nav {
           position: fixed;
           top: -200px;
@@ -58,6 +63,11 @@
           -webkit-transition: top 0.5s ease 0s;
           -moz-transition: top 0.5s ease 0s;
           -o-transition: top 0.5s ease 0s;
+        }
+
+        #calendar {
+          max-width: 800px;
+          margin: 50px auto 0;
         }
 
       </style>
@@ -88,12 +98,12 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="index.php">HOME</a></li>
-            <li><a href="about.php">ABOUT</a></li>
-            <li><a href="services.php">SERVICES</a></li>
-            <li><a href="events&clients.php">EVENTS & CLIENTS</a></li>
+            <li><a href="index.php">EVENTS & CLIENTS</a></li>
+            <li><a href="edit.php">EDIT</a></li>
+            <!-- <li><a href="services.php">SERVICES</a></li> -->
+            <!-- <li><a href="events&clients.php">EVENTS & CLIENTS</a></li>
             <li><a href="becomepartner.php">BECOME A PARTNER</a></li>
-            <li><a href="contact.php">CONTACT US</a></li>
+            <li><a href="contact.php">CONTACT US</a></li> -->
           </ul>
         </div>
       </div>
@@ -114,7 +124,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="index.php">HOME</a></li>
+            <li><a href="index.php">EVENTS & CLIENTS</a></li>
             <li><a href="edit.php">EDIT</a></li>
             <!-- <li><a href="services.php">SERVICES</a></li> -->
             <!-- <li><a href="events&clients.php">EVENTS & CLIENTS</a></li>

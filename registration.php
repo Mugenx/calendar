@@ -21,7 +21,6 @@ $(".catRadio").change(function(){
 </script>
 <?php endif; ?>
 <?php else: ?>
-</div>
 	<div class='soldout'>
 		<?php echo $eventDetails['sold_out_msg']; ?>
 	</div>
@@ -49,11 +48,11 @@ function CreateCostOptionsForm($eventDetails, $eventCost, $costCategories, $days
 		$taxDesc = $eventDetails['tax_desc'];
 		
 		if($diffSuperEarly > 0){
-			echo "<p> Super Saver - Valid Until $superEarlyDate </p>";
+			echo "<p> Super Saver - Valid Before $superEarlyDate </p>";
 			$isSuperSaver = true;
 			$isEarlyBird = false;
 		} else if($diffEarly > 0){
-			echo "<p> Early Bird - Valid Until $earlyDate </p>";
+			echo "<p> Early Bird - Valid Before $earlyDate </p>";
 			$isSuperSaver = false;
 			$isEarlyBird = true;
 		} else {
@@ -61,7 +60,7 @@ function CreateCostOptionsForm($eventDetails, $eventCost, $costCategories, $days
 			$isSuperSaver = false;
 			$isEarlyBird = false;
 		}
-                echo "<p><strong>To see a complete rate sheet, please click <a href='http://cbs-scb.ca/cbs0517/about#Rates' target='_blank'>here</a></strong></p>";
+
 		//Display Cost Options with ID and prices
 		$countCost = count($eventCost);
 		$eventCostDisp = $eventDetails['cost_display'];
@@ -69,21 +68,21 @@ function CreateCostOptionsForm($eventDetails, $eventCost, $costCategories, $days
 		if($eventDetails['use_cost_cat'] == 1){
 			$catChoices = "";
 			foreach($costCategories as $cat){
-				$catChoices .= "<div><input type='radio' name='catRadio' class='catRadio' value='". $cat['category_id']. "'><label>" . TextSelector($cat['category_name'], $cat['category_name_fr']) . "</label></div>";
+				$catChoices .= "<div><input type='radio' name='catRadio' class='catRadio' value='". $cat['category_name']. "'><label>" . $cat['category_name'] . "</label></div>";
 			}
-			echo "<div class='category-pick'><h3>" . TextSelector("Pick a conference category", "Veuillez faire un choix") . "</h3>$catChoices</div>";
+			echo "<div class='category-pick'><h3>Pick a conference category</h3>$catChoices</div>";
 			
 			
 		}
 
 		if($eventCostDisp == "grid"){
-			echo "<table class='table table-bordered' style='table-layout: auto !important;'><tr><td><strong>" . TextSelector("Conference Choice","Choix d'atelier") . "</strong></td><td><strong>" . TextSelector("Cost", "Prix") . "</strong></td><td><strong>" . TextSelector("Tax","Taxe") . "</strong></td><td><strong>" . TextSelector("Total","Total") . "</strong></td></tr>";
+			echo "<table class='table table-bordered' style='table-layout: auto !important;'><tr><td><strong>Conference Choice</strong></td><td><strong>Cost</strong></td><td><strong>Tax</strong></td><td><strong>Total</strong></td></tr>";
 			if($eventDetails['use_cost_cat'] == 1){
-				echo "<tr class='emptyCosts'><td><strong>" .  TextSelector("No options for selected category","Aucune options existe pour cette catégorie") . "</strong></td><td></td><td></td><td></td></tr>";
+				echo "<tr class='emptyCosts'><td><strong>No options for selected category</strong></td><td></td><td></td><td></td></tr>";
 			}
 			
 		} else {
-			echo "<div class='emptyCosts'><strong>"  .  TextSelector("No options for selected category","Aucune options existe pour cette catégorie") . "</strong></div>";
+			echo "<div class='emptyCosts'><strong>No options for selected category</strong></div>";
 		} 
 
 		for($i = 0; $i < $countCost; $i++)
@@ -94,11 +93,6 @@ function CreateCostOptionsForm($eventDetails, $eventCost, $costCategories, $days
 			$costCategory = str_replace(")", "", $costCategory );
 			$costCategory = str_replace("/", "", $costCategory );
 			$costCategory = str_replace('\\', "", $costCategory );
-			foreach($costCategories as $cat){
-				if($cat['category_name'] == $eventCost[$i]['cost_category']){
-					$costCategory = $cat['category_id'];
-				}
-			}
 			$costOneday = $eventCost[$i]['is_oneday'];
 			if($isSuperSaver){
 				$costType = $eventCost[$i]['cost_super_early_bird'];
@@ -117,7 +111,7 @@ function CreateCostOptionsForm($eventDetails, $eventCost, $costCategories, $days
 			}
 			if($eventCostDisp == "grid"){
 				$radioInput = "<input type='radio' name='event_option' class='$class' value='".$eventCost[$i]['event_cost_option_id']."' id='$cID'>";
-				$cChoice = TextSelector($eventCost[$i]['cost_level'], $eventCost[$i]['cost_level_fr']);
+				$cChoice = $eventCost[$i]['cost_level'];
 				$cost = "$" . $costType;
 				$tax = $taxDesc . " " . $taxRate ;
 				$total = "<strong>$" .money_format('%i', round(($taxRate*$costType+$costType), 2)) . "</strong>";
@@ -132,7 +126,7 @@ function CreateCostOptionsForm($eventDetails, $eventCost, $costCategories, $days
 			$totalPrice = $costType + $taxVal;
 			echo "<input type='hidden' name='ev_total_cost' value='$totalPrice' />";
 			$hiddenWW = "<input type='hidden' id='ww_" . $eventCost[$i]['event_cost_option_id'] . "' value='" . $eventCost[$i]['workshop_score'] . "'>";
-			echo "<label class='". $costCategory . " costOption' style='width:100%'><input type='radio' name='event_option' value='".$eventCost[$i]['event_cost_option_id']."' class='$class' id='$cID'>$hiddenWW<span>".TextSelector($eventCost[$i]['cost_level'], $eventCost[$i]['cost_level_fr'])."</span>: $".$costType ." + $taxDesc ".$taxRate." = ".money_format('%i', round(($taxRate*$costType+$costType), 2))."</label>";
+			echo "<label class='". $costCategory . " costOption' style='width:100%'><input type='radio' name='event_option' value='".$eventCost[$i]['event_cost_option_id']."' class='$class' id='$cID'>$hiddenWW<span>".$eventCost[$i]['cost_level']."</span>: $".$costType ." + $taxDesc ".$taxRate." = ".money_format('%i', round(($taxRate*$costType+$costType), 2))."</label>";
 			}
 
 		}
@@ -154,16 +148,13 @@ function CreateCostOptionsForm($eventDetails, $eventCost, $costCategories, $days
 		foreach($days as $day){
 			$dayDate = new DateTime($day);
 			$dayStr = $dayDate->format("l jS F Y");
-			if($day != "2016-05-25" && $day != "2016-05-28"){
-				$daySelect .= "<input type='checkbox' name='day_option[]' class='dayselector' value='$day'>  <label>$dayStr</label><br>";
-			}
+			$daySelect .= "<input type='checkbox' name='day_option[]' class='dayselector' value='$day'><label>$dayStr</label><br>";
 		}
 		
 		echo "<div class='daySelection' style='display:none;'><h3>Select a date: <span class='glyphicon glyphicon-exclamation-sign'></span></h3>$daySelect</div>";
 }
 function createWorkshops($eventWorkshop){
 	global $lang;
-	echo "<div class='workshops'>";
 echo "<div class='note' style='    background-color: rgba(233, 234, 196, 0.72);
     padding: 5px;
     border: 1px solid rgba(0, 0, 0, 0.26);
@@ -290,7 +281,7 @@ echo "<div class='note' style='    background-color: rgba(233, 234, 196, 0.72);
 				$sessionTable .= "</table></div>";
 				echo $sessionTable;
 			}
-			echo "</div>";
+
 			//echo "<button type='submit' class='btn btn-primary' name='saveSelections'>Submit</button>";
 			//echo "<form>";
 		} 
@@ -299,17 +290,11 @@ echo "<div class='note' style='    background-color: rgba(233, 234, 196, 0.72);
 
 function createExtraCosts($isSuperSaver, $isEarlyBird, $extraCosts){
 	if(!empty($extraCosts)){
-		$titleStr = "<div id='extraCosts'><h2>I would like to subscribe/renew my CBS membership</h2>";
-$titleStr .="<p>In order to be eligible to receive the CBS member conference registration rate, please register/renew your CBS membership. One-year CBS Memberships will expire on May 31, 2017; two-year CBS Memberships will expire on May 31, 2018. If you are not sure whether you are a currently registered member of the CBS, please contact <a href='mailto:info@bioethics.ca'>info@bioethics.ca</a>.</p>";
-$titleStr .=  "<p>For details on the benefits and criteria for CBS Membership categories, please visit the <a href='https://www.bioethics.ca/becoming-member/benefits.html' target='_blank'>CBS website</a>.</p>";
+		$titleStr = "<div id='extraCosts'><h2>Extra Options</h2><ul>";
 		echo "$titleStr";
-		echo "<ul class='yearSelect' style='list-style:none;'>";
-		echo "<li class='year'><input type='radio' class='yearSelectRadio' id='1year' name='yearRenew'>1 Year</li>";
-		echo "<li class='yearOptions' id='yo_1year'>";
-		echo "<ul class='e_1year' >";
 		foreach($extraCosts as $cost){
 			$costID = $cost['extra_event_cost_option_id'];
-			$costLabel = TextSelector($cost['cost_level'], $cost['cost_level_fr']);
+			$costLabel = $cost['cost_level'];
 			$costPrice = $cost['cost_regular'];
 			if($isEarlyBird){
 				$costPrice = $cost['cost_early_bird'];
@@ -317,87 +302,13 @@ $titleStr .=  "<p>For details on the benefits and criteria for CBS Membership ca
 			if($isSuperSaver){
 				$costPrice = $cost['cost_super_early_bird'];
 			}
-			if($cost['category'] == "1 Year"){
-			echo "<li><input type='radio' name='extraCost[]' value='$costID'><label style='display:inline;'>$costLabel - $$costPrice</label></li>";
-			}
+			echo "<li><input type='checkbox' name='extraCost[]' value='$costID'><label style='display:inline;'>$costLabel - $$costPrice</label></li>";
 		}
-		echo "</ul>
-			</li>";
-		echo "<li class='year'><input type='radio' class='yearSelectRadio' id='2year'  name='yearRenew'>2 Years</li>";
-		echo "<li class='yearOptions' id='yo_2year'>";
-		echo "<ul class='e_2year' >";
-		foreach($extraCosts as $cost){
-			$costID = $cost['extra_event_cost_option_id'];
-			$costLabel = TextSelector($cost['cost_level'], $cost['cost_level_fr']);
-			$costPrice = $cost['cost_regular'];
-			if($isEarlyBird){
-				$costPrice = $cost['cost_early_bird'];
-			} 
-			if($isSuperSaver){
-				$costPrice = $cost['cost_super_early_bird'];
-			}
-			if($cost['category'] == "2 Year"){
-			echo "<li><input type='radio' name='extraCost[]' value='$costID'><label style='display:inline;'>$costLabel - $$costPrice</label></li>";
-			}
-		}
-		echo "</ul>
-			</li>";
-		echo "<li><br> </li><li class='year'>Optional Donations</li>";
-		echo "<li class='d' id='yo_donations'>";
-		echo "<ul class='e_donations' style='list-style:none;'>";
-		foreach($extraCosts as $cost){
-			$costID = $cost['extra_event_cost_option_id'];
-			$costLabel = TextSelector($cost['cost_level'], $cost['cost_level_fr']);
-			$costPrice = $cost['cost_regular'];
-			if($isEarlyBird){
-				$costPrice = $cost['cost_early_bird'];
-			} 
-			if($isSuperSaver){
-				$costPrice = $cost['cost_super_early_bird'];
-			}
-			if($cost['category'] == "Donations"){
-			echo "<li><input type='checkbox' name='extraCost[]' value='$costID'> <label style='display:inline;'> $costLabel - $$costPrice</label></li>";
-			}
-		}
-		echo "</ul>
-			</li>";
-		echo "<li><br> </li><li class='year'>Reception Tickets</li>";
-		echo "<li class='d' id='yo_reception'>";
-		echo "<ul class='e_reception' style='list-style:none;'>";
-		foreach($extraCosts as $cost){
-			$costID = $cost['extra_event_cost_option_id'];
-			$costLabel = TextSelector($cost['cost_level'], $cost['cost_level_fr']);
-			$costPrice = $cost['cost_regular'];
-			if($isEarlyBird){
-				$costPrice = $cost['cost_early_bird'];
-			} 
-			if($isSuperSaver){
-				$costPrice = $cost['cost_super_early_bird'];
-			}
-			if($cost['category'] == "Reception Ticket"){
-			echo "<li><input type='checkbox' name='extraCost[]' value='$costID'> <label style='display:inline;'> $costLabel - $$costPrice</label></li>";
-			}
-		}
-		echo "</ul>
-			</li>";
-
-		echo "</ul>
-		</div>";
+		echo "</ul></div>";
 	}
 }
 ?>
 <script>
-$(".yearOptions").hide();
-$(".yearSelectRadio").click(function(){
-	var checked = $(this).prop("checked");
-	var id = $(this).attr("id");
-	$(".yearOptions").hide();
-	console.log("Clicked year " + checked);
-	if(checked){
-		$("#yo_" + id).show();
-		console.log("Showing #yo_" + id);
-	}
-});
 var nDays = 0;
 	var workshopScore = 0;
 	var isOneDay = false;
@@ -407,7 +318,7 @@ var nDays = 0;
 		//This function disables workshop selections based on days chosed and event option workshop score
 		
 	}
-$(".workshops").hide();
+
 jQuery(document).ready(function($) {
 	var nDays = 0;
 	var workshopScore = 0;
@@ -417,19 +328,19 @@ jQuery(document).ready(function($) {
 		
 		if(isOneDay){
 			//Get the days selected
-			//$(".wwDay").hide();
+			$(".wwDay").hide();
 			$(".dayselector").each(function(){
 				var sDay = $(this).val();
 			//	console.log("checking " + sDay);
 				var checked = $(this).prop("checked");
 				
 				if(checked){
-				//	console.log("DAY : " + sDay );
+					console.log("DAY : " + sDay );
 					$("#day_" + sDay).show();
 				}
 			});
 		} else {
-			//$(".wwDay").show();
+			$(".wwDay").show();
 		}
 		
 		if(totalScore == workshopScore){
@@ -503,11 +414,6 @@ $("#resetWorkshops").click(function(){
 			}
 			if(checked){
 				workshopScore = costWW;
-				if(costWW == 0){
-					$(".workshops").hide();
-				}else{
-					$(".workshops").show();
-				}
 				handleSessions();
 			}
 		});
@@ -650,9 +556,9 @@ $("#reg").validate(validOptions);
 	});
 	
 	$('#termAccept').click(function(){
-		var checkboxes = $('#myTerm').find('.terms').length;
-		var Rchecked = $('.terms').filter(':checked').length;
-		//console.log("CHECKBOXES: " + checkboxes +  " CHECKED:  " + Rchecked);
+		var checkboxes = $('#myTerm').find('.term').length;
+		var Rchecked = $('.terms_checkbox').filter(':checked').length + $('.terms_radio').filter(':checked').length;
+		console.log("CHECKBOXES: " + checkboxes +  " CHECKED:  " + Rchecked);
 		var buttonElem = $(this);
 		var captchaVal = grecaptcha.getResponse();
 		if (checkboxes == Rchecked && captchaVal != "")
@@ -663,16 +569,31 @@ $("#reg").validate(validOptions);
 			//	console.log("GOT A REG");
 				regArray[index] = $(this).serialize();
 			});
-			
+			var termsArray = new Array();
+			$(".terms_checkbox").filter(':checked').each(function(index){
+				var termName= $(this).prop("name");
+				var termVal = $(this).val();
+				var obj = {};
+				obj["" + termName] = termVal;
+				termsArray.push(obj);
+				console.log("Got a term " + termName + termVal);
+			});
+			$(".terms_radio").filter(':checked').each(function(index){
+				var termName= $(this).prop("name");
+				var termVal = $(this).val();
+				var obj = {};
+				obj["" + termName] = termVal;
+				termsArray.push(obj);
+			});
 			var jsonString = JSON.stringify(regArray);
-			
+			var termInfo = JSON.stringify(termsArray);
 			buttonElem.hide();
 			buttonElem.parent().append($("<span>Please wait...</span>"));
 			
 			$.ajax({
 				type: 'POST',
-				url: 'https://www.eventsystempro.net/cbs0517/addregs',
-				data: {data: jsonString, recaptcha: captchaVal},
+				url: '../' + dir + '/addregs',
+				data: {data: jsonString, terms: termInfo, recaptcha: captchaVal},
 				success: function(result){
 					
 					if(result != 0){
@@ -724,8 +645,6 @@ function addDelegate(){
 					catChoice = $(this).val().replace(")","");
 					catChoice = $(this).val().replace("/","");
 					catChoice = $(this).val().replace("\\","");
-					catChoice = $(this).val().replace(" ", "_");
-console.log("Find " + catChoice);
 					that.find(".costOption").hide();
 					that.find(".emptyCosts").hide();
 					that.find("." + catChoice).show();
@@ -775,11 +694,6 @@ console.log("Clicked cost option");
 			}
 			if(checked){
 				workshopScore = costWW;
-				if(costWW == 0){
-					$(".workshops").hide();
-				}else{
-					$(".workshops").show();
-				}
 				handleSessions();
 			}
 		});
@@ -863,4 +777,3 @@ function checkDays(){
 
 	
 </script>
-</div>

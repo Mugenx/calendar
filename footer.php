@@ -22,7 +22,7 @@
     <script src="lib/moment.min.js"></script>
     <script src="lib/jquery.min.js"></script>
     <script src='js/fullcalendar.min.js'></script>
-    <script src='js/calendarController.js'></script>
+    <!-- <script src='js/calendarController.js'></script> -->
 </body>
 </html>
 </html>

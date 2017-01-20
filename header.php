@@ -9,7 +9,7 @@
   <meta name="author" content="">
   <link rel="icon" href="../../favicon.ico">
 
-  <title>VERNEY DEMO</title>
+  <title>VERNEY CALENDAR</title>
 
   <!-- Bootstrap core CSS -->
   <!-- <link href="dist/css/bootstrap.min.css" rel="stylesheet"> -->
@@ -33,7 +33,7 @@
       
       <!-- Custom styles for this template -->
       <link href="css/style.css" rel="stylesheet">
-      
+      <!-- calendar css -->
       <link href="css/fullcalendar.min.css" rel="stylesheet" />
       <link href="css/fullcalendar.print.min.css" rel="stylesheet" media="print" />
      
@@ -100,6 +100,7 @@
           <ul class="nav navbar-nav">
             <li><a href="index.php">EVENTS & CLIENTS</a></li>
             <li><a href="edit.php">EDIT</a></li>
+            <li><a href="list.php">LIST</a></li>
             <!-- <li><a href="services.php">SERVICES</a></li> -->
             <!-- <li><a href="events&clients.php">EVENTS & CLIENTS</a></li>
             <li><a href="becomepartner.php">BECOME A PARTNER</a></li>
@@ -126,6 +127,7 @@
           <ul class="nav navbar-nav">
             <li><a href="index.php">EVENTS & CLIENTS</a></li>
             <li><a href="edit.php">EDIT</a></li>
+            <li><a href="list.php">LIST</a></li>
             <!-- <li><a href="services.php">SERVICES</a></li> -->
             <!-- <li><a href="events&clients.php">EVENTS & CLIENTS</a></li>
             <li><a href="becomepartner.php">BECOME A PARTNER</a></li>

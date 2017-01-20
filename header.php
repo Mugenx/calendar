@@ -70,6 +70,18 @@
           margin: 50px auto 0;
         }
 
+        .fc td{
+          color: #003366;
+          background-color: white;
+          border: 1px solid #d5d5d5;
+        }
+        .fc-ltr .fc-basic-view .fc-day-top .fc-day-number {
+          color: #003366;
+        }
+        .fc-unthemed td.fc-today {
+          background-color: #ffcc35;
+        }
+
       </style>
       
     </head>
